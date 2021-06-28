@@ -1,0 +1,63 @@
+<mat-toolbar color="primary">
+  <span>{{ title }}</span>
+</mat-toolbar>
+
+<div>
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <div class="main__container" role="main">
+      <div class="search_box__container">
+        <mat-form-field>
+          <input
+            matInput
+            type="search"
+            placeholder="Entre country name"
+            formControlName="search"
+          />
+        </mat-form-field>
+        <div class="input-group-button">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!searchForm.valid">Search</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+    <mat-accordion>
+      <mat-expansion-panel hideToggle *ngFor="let university of universityData" class="items">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ university.name }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="row">
+          <div gdColumns="60px 60px">Name:</div>
+          <div gdColumns="200px 200px">
+            {{ university.name }}
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div gdColumns="60px 60px">State:</div>
+          <div gdColumns="200px 200px">
+            {{ university["state-province"] }}
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div gdColumns="60px 60px">Country:</div>
+          <div gdColumns="200px 200px">
+            {{ university.country }} ({{ university.alpha_two_code }})
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div gdColumns="60px 60px">Web Site:</div>
+          <div
+            gdColumns="200px 200px"
+            *ngFor="let webSite of university.web_pages"
+          >
+            <a href="{{ webSite }}">{{ webSite }}</a>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
